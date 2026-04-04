@@ -1,0 +1,42 @@
+.space-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.space-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.welcome-screen {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.welcome-icon {
+  color: var(--accent-blue);
+  margin-bottom: 24px;
+  opacity: 0.8;
+  animation: pulse 4s infinite ease-in-out;
+}
+
+.welcome-screen h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.welcome-text {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 500px;
+}

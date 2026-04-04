@@ -1,0 +1,123 @@
+.level-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.level-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Theme Accents */
+.level-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.theme-blue::before { background: var(--accent-blue); }
+.theme-purple::before { background: var(--accent-purple); }
+.theme-orange::before { background: var(--accent-orange); }
+
+.level-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--panel-border);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.level-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
+.theme-blue .level-badge { color: var(--accent-blue); }
+.theme-purple .level-badge { color: var(--accent-purple); }
+.theme-orange .level-badge { color: var(--accent-orange); }
+
+.level-title {
+  font-size: 1.3rem;
+  color: var(--text-main);
+}
+
+.level-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.level-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.study-materials {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border: 1px solid var(--panel-border);
+  margin-top: auto;
+}
+
+.materials-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.materials-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.material-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+button.internal-btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.material-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+.external-icon {
+  opacity: 0.5;
+}
+
+.material-link:hover .external-icon {
+  opacity: 1;
+}

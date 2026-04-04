@@ -1,0 +1,139 @@
+.projects-page {
+  padding: 32px 40px;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+}
+
+.page-header .subtitle {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+.labs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.project-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-header .section-title {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.theme-blue .section-title { color: var(--accent-blue); }
+.theme-orange .section-title { color: var(--accent-orange); }
+.theme-purple .section-title { color: var(--accent-purple); }
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  min-height: 160px;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.diff-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.diff-beginner { color: var(--accent-teal); background: rgba(0, 255, 170, 0.1); }
+.diff-intermediate { color: var(--accent-orange); background: rgba(255, 153, 0, 0.1); }
+.diff-expert { color: var(--accent-purple); background: rgba(187, 134, 252, 0.1); }
+
+.github-icon {
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.project-card:hover .github-icon {
+  color: var(--text-color);
+}
+
+.project-title {
+  font-size: 1.15rem;
+  color: var(--text-color);
+  line-height: 1.5;
+  margin-bottom: 30px;
+  flex-grow: 1;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.project-id {
+  font-family: monospace;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+}
+
+.run-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: color var(--transition-fast);
+}
+
+.project-card:hover .run-link {
+  color: var(--accent-blue);
+}
