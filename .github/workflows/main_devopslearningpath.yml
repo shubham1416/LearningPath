@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - Devopslearningpath
+name: Build and deploy Node.js app to Azure Web App - DevOpslearningpath
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
+          node-version: '22.x'
 
       - name: npm install, build, and test
         run: |
@@ -51,15 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_25DA00AB3DE541A1A83A7DE94ADA0A36 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9183B4D55F1144FBBF62E7C6AC81E869 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_984E86E3E7C54E5B99D69BD9E273E622 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BA21A2FBD6B84BD38CB32336D6DE3BA6 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DDEB9F753704482DB7325FF4991AC991 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4D387144C47A4961A39CCDE6E878CEF1 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Devopslearningpath'
+          app-name: 'DevOpslearningpath'
           slot-name: 'Production'
           package: .
           
