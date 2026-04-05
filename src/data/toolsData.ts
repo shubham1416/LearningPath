@@ -21,7 +21,7 @@ export type CommandDetail = {
 export type LevelData = {
   title: string;
   description: string | string[];
-  studyMaterials: { name: string; link: string; isInternal?: boolean; internalRouteKey?: string }[];
+  studyMaterials: { name: string; link: string; isInternal?: boolean; internalRouteKey?: string; isVideo?: boolean }[];
   studyContent?: {
     whatIsIt: string;
     whyUseIt: string;
@@ -34,7 +34,7 @@ export type ToolData = {
   id: string;
   name: string;
   icon: any;
-  category: 'Version Control' | 'CI/CD' | 'Code Quality' | 'Artifact Repo' | 'Containerization' | 'Build Tool' | 'IDE' | 'OS & Environment';
+  category: 'Version Control' | 'CI/CD' | 'Code Quality' | 'Artifact Repo' | 'Containerization' | 'Build Tool' | 'IDE' | 'OS & Environment' | 'Configuration Management' | 'Cloud Platform' | 'Monitoring & Observability' | 'Infrastructure as Code';
   shortDesc: string;
   concept: string;
   advancedConcept: string;
@@ -102,7 +102,10 @@ export const toolsData: ToolData[] = [
       beginner: {
         title: 'Git Basics',
         description: 'Learn the basic commands: clone, add, commit, push, pull, and branch.',
-        studyMaterials: [{ name: 'Git Official Documentation', link: '#' }]
+        studyMaterials: [
+          { name: 'Git Official Documentation', link: '#' },
+          { name: 'Git and GitHub Full Course', link: 'https://www.youtube.com/watch?v=apGV9Kg7ics', isVideo: true }
+        ]
       },
       intermediate: {
         title: 'Branching & Merging',
@@ -154,7 +157,10 @@ export const toolsData: ToolData[] = [
       beginner: {
         title: 'Docker 101 & Basic Commands',
         description: 'Understanding Images, Containers, Dockerfile basics, and docker run.',
-        studyMaterials: [{ name: 'Start Docker Basic Study', link: '#', isInternal: true, internalRouteKey: 'beginner' }],
+        studyMaterials: [
+          { name: 'Start Docker Basic Study', link: '#', isInternal: true, internalRouteKey: 'beginner' },
+          { name: 'Docker Full Course', link: 'https://www.youtube.com/watch?v=3c-iBn73dDE', isVideo: true }
+        ],
         studyContent: {
           whatIsIt: 'Docker is an open platform for developing, shipping, and running applications in isolated execution environments called containers.',
           whyUseIt: 'We use Docker to ensure "it works on my machine" means "it works everywhere". It eliminates manual environment setup and standardizes code deployment.',
@@ -228,12 +234,18 @@ export const toolsData: ToolData[] = [
       beginner: {
         title: 'K8s Architecture & Pods',
         description: 'Understanding Nodes, Pods, Deployments, and Services.',
-        studyMaterials: [{ name: 'Kubernetes.io Beginners Guide', link: '#' }]
+        studyMaterials: [
+          { name: 'Kubernetes.io Beginners Guide', link: '#' },
+          { name: 'Kubernetes Crash Course Part 1', link: 'https://www.youtube.com/watch?v=dfxrdoEQe00', isVideo: true }
+        ]
       },
       intermediate: {
         title: 'Configurability & State',
         description: 'ConfigMaps, Secrets, Ingress, PersistentVolumes, and StatefulSets.',
-        studyMaterials: [{ name: 'Kubernetes The Hard Way (Intro)', link: '#' }]
+        studyMaterials: [
+          { name: 'Kubernetes The Hard Way (Intro)', link: '#' },
+          { name: 'Kubernetes Crash Course Part 2', link: 'https://www.youtube.com/watch?v=6_gMoe7Ik8k', isVideo: true }
+        ]
       },
       expert: {
         title: 'Operators & Cluster Admin',
@@ -254,7 +266,10 @@ export const toolsData: ToolData[] = [
       beginner: {
         title: 'Jenkins Basics',
         description: 'Installing Jenkins, creating Freestyle jobs, and basic triggers.',
-        studyMaterials: [{ name: 'Jenkins User Documentation', link: '#' }]
+        studyMaterials: [
+          { name: 'Jenkins User Documentation', link: '#' },
+          { name: 'Jenkins Full Course', link: 'https://www.youtube.com/watch?v=FX322RVNGj4', isVideo: true }
+        ]
       },
       intermediate: {
         title: 'Declarative Pipelines',
@@ -447,6 +462,122 @@ export const toolsData: ToolData[] = [
         title: 'RCP Development',
         description: 'Building custom tools leveraging the Eclipse RCP ecosystem.',
         studyMaterials: [{ name: 'Eclipse RCP Architecture', link: '#' }]
+      }
+    }
+  },
+  {
+    id: 'ansible',
+    name: 'Ansible',
+    icon: Terminal,
+    category: 'Configuration Management',
+    shortDesc: 'Radically simple IT automation system.',
+    concept: 'Ansible is an open-source software provisioning, configuration management, and application-deployment tool enabling infrastructure as code.',
+    advancedConcept: 'Advanced playbooks, custom modules, Ansible Tower/AWX, and dynamic inventories.',
+    levels: {
+      beginner: {
+        title: 'Ansible Basics',
+        description: 'Understanding YAML, ad-hoc commands, and basic playbooks.',
+        studyMaterials: [
+          { name: 'Ansible Documentation', link: '#' },
+          { name: 'Ansible Full Course', link: 'https://www.youtube.com/watch?v=EcnqJbxBcM0', isVideo: true }
+        ]
+      },
+      intermediate: {
+        title: 'Roles & Variables',
+        description: 'Structuring with roles, variable precedence, and Vault.',
+        studyMaterials: [{ name: 'Ansible Best Practices', link: '#' }]
+      },
+      expert: {
+        title: 'Custom Modules & AWX',
+        description: 'Writing custom python modules and managing enterprise AWX.',
+        studyMaterials: [{ name: 'Extending Ansible', link: '#' }]
+      }
+    }
+  },
+  {
+    id: 'aws',
+    name: 'AWS',
+    icon: Server,
+    category: 'Cloud Platform',
+    shortDesc: 'Comprehensive and broadly adopted cloud platform.',
+    concept: 'Amazon Web Services provides on-demand cloud computing platforms and APIs to individuals, companies, and governments, on a metered pay-as-you-go basis.',
+    advancedConcept: 'Serverless architectures, Transit Gateways, multi-region active-active deployments, and advanced IAM policing.',
+    levels: {
+      beginner: {
+        title: 'Core Services',
+        description: 'EC2, S3, IAM, and basic VPC concepts.',
+        studyMaterials: [
+          { name: 'Getting Started with AWS', link: '#' },
+          { name: 'AWS Full Course', link: 'https://www.youtube.com/watch?v=3YkSb9oO14o', isVideo: true }
+        ]
+      },
+      intermediate: {
+        title: 'Scaling & Databases',
+        description: 'Auto Scaling, ALB, RDS, and Elasticache architectures.',
+        studyMaterials: [{ name: 'AWS High Availability Guide', link: '#' }]
+      },
+      expert: {
+        title: 'Advanced Architecture',
+        description: 'Direct Connect, Organizations, and complex Serverless (Lambda, EventBridge).',
+        studyMaterials: [{ name: 'AWS Well-Architected Framework', link: '#' }]
+      }
+    }
+  },
+  {
+    id: 'monitoring',
+    name: 'Monitoring (Prometheus & Grafana)',
+    icon: Activity,
+    category: 'Monitoring & Observability',
+    shortDesc: 'Systems monitoring and alerting toolkit.',
+    concept: 'Observability tools like Prometheus and Grafana collect and store metrics as time series data to monitor the exact performance footprint of infrastructure over time.',
+    advancedConcept: 'PromQL deep dives, AlertManager routing trees, and custom exporter development.',
+    levels: {
+      beginner: {
+        title: 'Monitoring Fundamentals',
+        description: 'Setting up Node Exporters, Prometheus scraping, and standard Grafana dashboards.',
+        studyMaterials: [
+          { name: 'Prometheus Official Docs', link: '#' },
+          { name: 'Monitoring Full Course', link: 'https://www.youtube.com/watch?v=DXZUunEeHqM', isVideo: true }
+        ]
+      },
+      intermediate: {
+        title: 'Custom Metrics & PromQL',
+        description: 'Instrumenting custom apps, writing PromQL queries, and creating dynamic variables in Grafana.',
+        studyMaterials: [{ name: 'PromQL For Beginners', link: '#' }]
+      },
+      expert: {
+        title: 'Alerting at Scale',
+        description: 'High availability Prometheus configs (Thanos) and complex AlertManager webhooks.',
+        studyMaterials: [{ name: 'Thanos Documentation', link: '#' }]
+      }
+    }
+  },
+  {
+    id: 'terraform',
+    name: 'Terraform',
+    icon: Box,
+    category: 'Infrastructure as Code',
+    shortDesc: 'Safely and predictably create, change, and improve infrastructure.',
+    concept: 'Terraform is an infrastructure as code software tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share.',
+    advancedConcept: 'Custom providers, Terraform Cloud, remote state management, and complex workspace handling.',
+    levels: {
+      beginner: {
+        title: 'Terraform Basics',
+        description: 'Providers, resources, variables, and the basic init/plan/apply state cycle.',
+        studyMaterials: [
+          { name: 'Terraform Intro Docs', link: '#' },
+          { name: 'Terraform Full Course', link: 'https://www.youtube.com/watch?v=S9mohJI_R34', isVideo: true }
+        ]
+      },
+      intermediate: {
+        title: 'Modules & State',
+        description: 'Creating reusable modules, outputs, and remote state backends.',
+        studyMaterials: [{ name: 'Terraform Modules Guide', link: '#' }]
+      },
+      expert: {
+        title: 'Complex Automations',
+        description: 'Workspaces, for_each functions, dynamic blocks, and CI/CD integrations.',
+        studyMaterials: [{ name: 'HashiCorp Advanced TF', link: '#' }]
       }
     }
   }

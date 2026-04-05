@@ -1,6 +1,6 @@
 import React from 'react';
 import type { LevelData } from '../../data/toolsData';
-import { ExternalLink, BookOpenCheck, ChevronRight } from 'lucide-react';
+import { ExternalLink, BookOpenCheck, ChevronRight, PlayCircle } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './LevelSection.css';
 
@@ -49,9 +49,13 @@ export const LevelSection: React.FC<LevelSectionProps> = ({ level, data, theme }
                     <ChevronRight size={14} className="external-icon" />
                   </button>
                 ) : (
-                  <a href={material.link} className="material-link">
+                  <a href={material.link} className="material-link" target="_blank" rel="noopener noreferrer">
                     {material.name}
-                    <ExternalLink size={14} className="external-icon" />
+                    {material.isVideo ? (
+                      <PlayCircle size={16} className="external-icon" style={{ color: '#ff4444' }} />
+                    ) : (
+                      <ExternalLink size={14} className="external-icon" />
+                    )}
                   </a>
                 )}
               </li>
