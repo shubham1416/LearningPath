@@ -1,0 +1,129 @@
+.playground-page {
+    padding: 32px 40px;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.playground-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.header-left .title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.icon-main {
+    color: var(--accent-blue);
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-badge.connecting { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
+.status-badge.connected { background: rgba(0, 255, 170, 0.1); color: var(--accent-teal); }
+.status-badge.disconnected { background: rgba(255, 68, 68, 0.1); color: #ff4444; }
+
+.playground-main {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 32px;
+    min-height: 0;
+}
+
+.xterm-wrapper {
+    background: #1e1e1e;
+    padding: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.xterm-wrapper .terminal {
+    height: 100%;
+}
+
+.playground-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.side-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.side-card h3 {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.side-card ul {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    list-style: disc;
+    padding-left: 20px;
+}
+
+.prompt-hint code {
+    display: block;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--accent-teal);
+    line-height: 1.4;
+    cursor: copy;
+}
+
+/* Keyboard shortcuts panel */
+.shortcuts-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.shortcuts-list li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+kbd {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 0.75rem;
+    font-family: 'Fira Code', monospace;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+

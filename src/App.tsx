@@ -4,6 +4,7 @@ import { AppLayout } from './components/layout/AppLayout';
 import { SpacePage } from './pages/SpacePage';
 import { StudyMaterialPage } from './pages/StudyMaterialPage';
 import { ProjectsPage } from './pages/ProjectsPage';
+import { PlaygroundPage } from './pages/PlaygroundPage';
 
 const App: React.FC = () => {
   return (
@@ -44,6 +45,12 @@ const App: React.FC = () => {
         <Route 
           path="practice-labs" 
           element={<ProjectsPage />} 
+        />
+        
+        {/* Real-time Playground */}
+        <Route 
+          path="playground" 
+          element={<PlaygroundPage />} 
         />
       </Route>
       

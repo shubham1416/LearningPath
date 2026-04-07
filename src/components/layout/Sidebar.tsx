@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { BookOpen, ShieldAlert, LayoutDashboard } from 'lucide-react';
+import { BookOpen, ShieldAlert, LayoutDashboard, Terminal } from 'lucide-react';
 import './Sidebar.css';
 
 export const Sidebar: React.FC = () => {
@@ -36,13 +36,20 @@ export const Sidebar: React.FC = () => {
         </NavLink>
 
         <div className="nav-section-title" style={{ marginTop: '24px' }}>PRACTICE</div>
-        
         <NavLink 
           to="/practice-labs" 
           className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
         >
           <LayoutDashboard size={18} />
           <span>Practice Labs</span>
+        </NavLink>
+
+        <NavLink 
+          to="/playground" 
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <Terminal size={18} />
+          <span>Terminal Playground</span>
         </NavLink>
       </div>
 
