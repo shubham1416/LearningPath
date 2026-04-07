@@ -4,14 +4,19 @@ import {
   Settings, 
   Activity, 
   PlayCircle,
-  Package,
-  Server,
   Code,
   Box,
   Layers,
-  Wrench,
-  Terminal
+  Terminal,
+  TerminalSquare,
+  FileCode,
+  Globe2,
+  CloudCog,
+  Infinity as InfinityIcon,
+  BarChart
 } from 'lucide-react';
+
+import React from 'react';
 
 export type CommandDetail = {
   cmd: string;
@@ -30,11 +35,26 @@ export type LevelData = {
   };
 };
 
+export type ToolCategory = 
+  | 'Programming Languages' 
+  | 'OS & Environment' 
+  | 'Scripting Languages' 
+  | 'Version Control' 
+  | 'CI/CD' 
+  | 'Containerization' 
+  | 'Orchestration'
+  | 'Infrastructure as Code'
+  | 'Configuration Management'
+  | 'Monitoring & Observability'
+  | 'Cloud Platforms'
+  | 'Build Tools'
+  | 'Architecture & Design';
+
 export type ToolData = {
   id: string;
   name: string;
-  icon: any;
-  category: 'Version Control' | 'CI/CD' | 'Code Quality' | 'Artifact Repo' | 'Containerization' | 'Build Tool' | 'IDE' | 'OS & Environment' | 'Configuration Management' | 'Cloud Platform' | 'Monitoring & Observability' | 'Infrastructure as Code';
+  icon: React.ElementType;
+  category: ToolCategory;
   shortDesc: string;
   concept: string;
   advancedConcept: string;
@@ -45,77 +65,142 @@ export type ToolData = {
   };
 };
 
+// Organize according to roadmap.sh/devops flow roughly
 export const toolsData: ToolData[] = [
+  // ===================== PROGRAMMING LANGUAGES =====================
   {
-    id: 'linux',
-    name: 'Linux Environment',
-    icon: Terminal,
-    category: 'OS & Environment',
-    shortDesc: 'The foundation of modern DevOps and server management.',
-    concept: 'Linux is an open-source, Unix-like operating system kernel that serves as the backbone of modern server infrastructure, cloud computing, and DevOps environments. Knowing how to powerfully navigate the CLI is fundamental.',
-    advancedConcept: 'Advanced Linux usage involves intricate shell scripting (Bash, Awk, Sed), strict network programming, configuring packet-filtering firewalls (iptables), and deep system profiling to fine-tune memory and IO constraints at scale.',
+    id: 'python',
+    name: 'Python',
+    icon: FileCode,
+    category: 'Programming Languages',
+    shortDesc: 'A powerful, readable language heavily used in DevOps.',
+    concept: 'Python is an interpreted, high-level, general-purpose programming language. Its design philosophy emphasizes code readability, making it exceptional for writing automation scripts, interacting with cloud APIs via Boto3, or data analysis.',
+    advancedConcept: 'Building robust concurrent CLI tooling with asyncio, deep library packaging, creating fully-fledged webhooks with FastAPI, and complex state management.',
     levels: {
       beginner: {
-        title: 'Core Navigation & Files',
-        description: [
-          'Basic operations require you to comfortably navigate the system and manipulate files.',
-          '• pwd & cd: Check your current directory footprint and navigate paths.',
-          '• ls & touch: List existing items (use -l for details, -a for hidden) and create empty files.',
-          '• mkdir, rm, cp, mv: Make folders, safely remove files/folders (use with caution), copy, and move/rename assets.',
-          '• cat & echo: Display file contents immediately to the terminal and output literal text.'
-        ],
-        studyMaterials: [{ name: 'Linux Basics for Hackers', link: 'https://linuxsurvival.com/' }]
+        title: 'Python Basics',
+        description: 'Variables, loops, functions, lists, and dicts.',
+        studyMaterials: [{ name: 'Learn Python - Full Course', link: 'https://www.youtube.com/watch?v=rfscVS0vtbw', isVideo: true }]
       },
       intermediate: {
-        title: 'Permissions & System Monitoring',
-        description: [
-          'Take command over permissions, processes, and network troubleshooting.',
-          '• Access Control: Use chmod (e.g., 755) and chown to manage security privileges and ownership.',
-          '• Processing Data: Search directories with find, filter text streams utilizing grep, or count content with wc.',
-          '• Performance: Oversee live running tasks with top and ps, and gracefully stop them using kill.',
-          '• Disk & Network: Evaluate storage constraints via df -h and du -sh. Test network reachability utilizing ping, and perform web requests using curl and wget.'
-        ],
-        studyMaterials: [{ name: 'The Linux Command Line', link: 'https://ubuntu.com/tutorials/command-line-for-beginners' }]
+        title: 'Scripting & APIs',
+        description: 'Using requests module, parsing JSON, managing virtual environments.',
+        studyMaterials: [{ name: 'Automate the Boring Stuff', link: 'https://automatetheboringstuff.com/' }]
       },
       expert: {
-        title: 'Advanced Operations & Streams',
-        description: [
-          'Master real-time environment automation, packet structures, and complex data streams.',
-          '• Text Mastery: Leverage awk for advanced column filtering and sed to powerfully edit text on the fly.',
-          '• System Orchestration: Control the entire service lifecycle utilizing systemctl and forensically analyze kernel logs via journalctl.',
-          '• Deep Networking: Use ip, netstat, and iptables to trace out robust networking and firewall strategies.',
-          '• Automation & Maintenance: Schedule robust recurring cron jobs, mount partitions, analyze hardware stats via iostat and vmstat, and handle deeply nested processes.'
-        ],
-        studyMaterials: [{ name: 'Advanced Bash-Scripting Guide', link: 'https://www.gnu.org/software/bash/manual/' }]
+        title: 'Advanced Automation',
+        description: 'Boto3 (AWS SDK), Async IO, testing with PyTest, CI pipelines.',
+        studyMaterials: [{ name: 'Boto3 Documentation', link: 'https://boto3.amazonaws.com/v1/documentation/api/latest/index.html' }]
       }
     }
   },
+  {
+    id: 'go',
+    name: 'Go (Golang)',
+    icon: Code,
+    category: 'Programming Languages',
+    shortDesc: 'The language of modern cloud-native systems.',
+    concept: 'Go is an open source programming language supported by Google. It is compiled, typed, and features excellent concurrency. The majority of DevOps tools (Docker, K8s, Terraform) are written in Go.',
+    advancedConcept: 'Advanced Goroutines, context handling, memory profiling, and writing custom Terraform providers or Kubernetes Operators.',
+    levels: {
+      beginner: {
+        title: 'Go Fundamentals',
+        description: 'Syntax, structs, interfaces, and packages.',
+        studyMaterials: [{ name: 'Tour of Go', link: 'https://go.dev/tour/' }]
+      },
+      intermediate: {
+        title: 'Concurrency & Tooling',
+        description: 'Goroutines, channels, waitgroups, and building CLI apps.',
+        studyMaterials: [{ name: 'Go by Example', link: 'https://gobyexample.com/' }]
+      },
+      expert: {
+        title: 'Extending DevOps',
+        description: 'Building custom K8s controllers and Terraform plugins.',
+        studyMaterials: [{ name: 'Kubebuilder Book', link: 'https://book.kubebuilder.io/' }]
+      }
+    }
+  },
+
+  // ===================== OS & ENVIRONMENT =====================
+  {
+    id: 'linux',
+    name: 'Linux / Unix',
+    icon: TerminalSquare,
+    category: 'OS & Environment',
+    shortDesc: 'The foundation of modern server infrastructure.',
+    concept: 'Linux is an open-source, Unix-like operating system kernel. Operating bare-metal via CLI, managing permissions, and understanding how processes interface with the hardware is critical.',
+    advancedConcept: 'Kernel tuning, systemd deeply, eBPF performance tuning, and complex network packet routing.',
+    levels: {
+      beginner: {
+        title: 'Core Navigation',
+        description: 'Files, Folders, and basic file reading operations.',
+        studyMaterials: [{ name: 'Linux Command Line', link: 'https://ubuntu.com/tutorials/command-line-for-beginners' }]
+      },
+      intermediate: {
+        title: 'Permissions & Process',
+        description: 'Chmod, Chown, Top, Ps, and Network utils (ping, curl).',
+        studyMaterials: [{ name: 'Linux Survival', link: 'https://linuxsurvival.com/' }]
+      },
+      expert: {
+        title: 'Advanced Operations',
+        description: 'Text mastery (awk, sed), systemd, and tracing (strace).',
+        studyMaterials: [{ name: 'RedHat Admin Guide', link: '#' }]
+      }
+    }
+  },
+
+  // ===================== SCRIPTING LANGUAGES =====================
+  {
+    id: 'bash',
+    name: 'Bash Scripting',
+    icon: Terminal,
+    category: 'Scripting Languages',
+    shortDesc: 'Glue the ecosystem together directly in the terminal.',
+    concept: 'Bash is deeply integrated into standard Linux environments. Writing robust bash scripts allows you to chain commands, pipe outputs, and automate tasks natively without compiler dependencies.',
+    advancedConcept: 'Safe scripts (`set -euxo pipefail`), subprocess substitution, trap handlers, and advanced text stream manipulation.',
+    levels: {
+      beginner: {
+        title: 'Script Structure',
+        description: 'Variables, shebangs, conditionals, and loops in Bash.',
+        studyMaterials: [{ name: 'Bash Scripting Tutorial', link: 'https://linuxconfig.org/bash-scripting-tutorial-for-beginners' }]
+      },
+      intermediate: {
+        title: 'Pipes & Arguments',
+        description: 'Handling parameters ($1, $@), awk/sed parsing, and exits.',
+        studyMaterials: [{ name: 'Advanced Bash-Scripting', link: 'https://tldp.org/LDP/abs/html/' }]
+      },
+      expert: {
+        title: 'Production Safety',
+        description: 'Error trapping, parallel background processes, robust deployments.',
+        studyMaterials: [{ name: 'Google Shell Style Guide', link: 'https://google.github.io/styleguide/shellguide.html' }]
+      }
+    }
+  },
+
+  // ===================== VERSION CONTROL =====================
   {
     id: 'git',
     name: 'Git',
     icon: GitBranch,
     category: 'Version Control',
     shortDesc: 'Distributed version control system.',
-    concept: 'Git is a distributed version control system that tracks changes in any set of computer files, usually used for coordinating work among programmers collaboratively developing source code during software development.',
-    advancedConcept: 'Advanced Git concepts include interactive rebasing, reflogs, bisecting, submodules, and complex branching strategies like GitFlow or Trunk-based development.',
+    concept: 'Tracks changes in any set of computer files. It enables highly collaborative environments, branch strategy handling, and code version preservation over time.',
+    advancedConcept: 'Interactive rebasing, reflogs, bisecting, and complex merge conflict resolution.',
     levels: {
       beginner: {
         title: 'Git Basics',
-        description: 'Learn the basic commands: clone, add, commit, push, pull, and branch.',
-        studyMaterials: [
-          { name: 'Git Official Documentation', link: '#' },
-          { name: 'Git and GitHub Full Course', link: 'https://www.youtube.com/watch?v=apGV9Kg7ics', isVideo: true }
-        ]
+        description: 'clone, add, commit, push, pull.',
+        studyMaterials: [{ name: 'Git Official Docs', link: 'https://git-scm.com/doc' }]
       },
       intermediate: {
         title: 'Branching & Merging',
-        description: 'Understanding merge conflicts, rebasing, and branching strategies.',
-        studyMaterials: [{ name: 'Atlassian Git Tutorial', link: '#' }]
+        description: 'Conflicts, rebasing, and stashing.',
+        studyMaterials: [{ name: 'Atlassian Git Tutorial', link: 'https://www.atlassian.com/git/tutorials' }]
       },
       expert: {
-        title: 'Advanced Git Operations',
-        description: 'Mastering the reflog, interactive rebase, squashing, cherry-picking, and submodules.',
-        studyMaterials: [{ name: 'Pro Git Book (Free)', link: '#' }]
+        title: 'Advanced Git',
+        description: 'reflog, squashing, cherry-picking, hooks.',
+        studyMaterials: [{ name: 'Pro Git Book', link: 'https://git-scm.com/book/en/v2' }]
       }
     }
   },
@@ -124,162 +209,52 @@ export const toolsData: ToolData[] = [
     name: 'GitHub',
     icon: GitPullRequest,
     category: 'Version Control',
-    shortDesc: 'Hosting service for software development and version control.',
-    concept: 'GitHub is a developer platform that allows developers to create, store, manage and share their code. It uses Git software, providing the distributed version control of Git plus access control, bug tracking, and task management.',
-    advancedConcept: 'Leveraging GitHub APIs, Webhooks, GitHub Apps, security alerting, and intricate repository management.',
+    shortDesc: 'Collaborative code hosting and management.',
+    concept: 'A cloud platform providing UI access to Git, alongside powerful project management tools like Pull Requests, Issues, and Actions.',
+    advancedConcept: 'Advanced PR management, CI integration, webhooks, and enterprise administration.',
     levels: {
       beginner: {
-        title: 'GitHub Fundamentals',
-        description: 'Creating repositories, Pull Requests, and basic Code Reviews.',
-        studyMaterials: [{ name: 'GitHub Learning Lab', link: '#' }]
+        title: 'Repositories',
+        description: 'Creating repos, forks, and basic PRs.',
+        studyMaterials: [{ name: 'GitHub Hello World', link: 'https://docs.github.com/en/get-started/quickstart/hello-world' }]
       },
       intermediate: {
-        title: 'Collaboration & Management',
-        description: 'Managing teams, issues, milestones, and advanced PR policies.',
-        studyMaterials: [{ name: 'GitHub Docs: Collaborating', link: '#' }]
+        title: 'Collaboration',
+        description: 'Issues, labels, team code reviews.',
+        studyMaterials: [{ name: 'GitHub Reviews Docs', link: '#' }]
       },
       expert: {
-        title: 'GitHub Administration & Security',
-        description: 'Advanced administration, Dependabot setup, GitHub Advanced Security.',
-        studyMaterials: [{ name: 'GitHub Admin Guides', link: '#' }]
+        title: 'Security & Enterprise',
+        description: 'Dependabot, Advanced Security, Branch protection rules.',
+        studyMaterials: [{ name: 'GitHub Security', link: '#' }]
       }
     }
   },
-  {
-    id: 'docker',
-    name: 'Docker',
-    icon: Box,
-    category: 'Containerization',
-    shortDesc: 'Platform for developing, shipping, and running applications in containers.',
-    concept: 'Docker uses OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files.',
-    advancedConcept: 'Deep dive into container runtimes, multi-stage builds, building minimal base images, security scanning, and internal networking.',
-    levels: {
-      beginner: {
-        title: 'Docker 101 & Basic Commands',
-        description: 'Understanding Images, Containers, Dockerfile basics, and docker run.',
-        studyMaterials: [
-          { name: 'Start Docker Basic Study', link: '#', isInternal: true, internalRouteKey: 'beginner' },
-          { name: 'Docker Full Course', link: 'https://www.youtube.com/watch?v=3c-iBn73dDE', isVideo: true }
-        ],
-        studyContent: {
-          whatIsIt: 'Docker is an open platform for developing, shipping, and running applications in isolated execution environments called containers.',
-          whyUseIt: 'We use Docker to ensure "it works on my machine" means "it works everywhere". It eliminates manual environment setup and standardizes code deployment.',
-          howToUseIt: 'You primarily use Docker by writing a Dockerfile, building it into an image, and running that image via the CLI engine. Below are the foundational commands.',
-          commands: [
-            { cmd: 'docker --version', desc: 'Shows installed version' },
-            { cmd: 'docker info', desc: 'Detailed system info' },
-            { cmd: 'docker pull ubuntu', desc: 'Downloads image' },
-            { cmd: 'docker images', desc: 'Lists images' },
-            { cmd: 'docker run -it ubuntu bash', desc: 'Runs container interactively' },
-            { cmd: 'docker ps -a', desc: 'Lists containers (running and stopped)' },
-            { cmd: 'docker stop/start', desc: 'Stops/starts container' },
-            { cmd: 'docker rm / rmi', desc: 'Deletes container / image' },
-            { cmd: 'docker exec', desc: 'Access running container' }
-          ]
-        }
-      },
-      intermediate: {
-        title: 'Management & Operations',
-        description: 'Multi-container applications, persisting data, network modes, and building workflows.',
-        studyMaterials: [{ name: 'Start Docker Intermediate Study', link: '#', isInternal: true, internalRouteKey: 'intermediate' }],
-        studyContent: {
-          whatIsIt: 'Intermediate Docker usage involves persisting state, networking multiple containers together, and optimizing image building.',
-          whyUseIt: 'Real-world applications are not solitary. They require databases (which need volume storage), cache servers (which need networks), and efficient builds.',
-          howToUseIt: 'Use these commands to deeply inspect container configurations, build production layers, and securely persist data out of the container lifecycle.',
-          commands: [
-            { cmd: 'docker build -t myapp .', desc: 'Build an image from a Dockerfile' },
-            { cmd: 'docker commit <id> myimg', desc: 'Save container as a new image' },
-            { cmd: 'docker logs <id>', desc: 'View output logs of a container' },
-            { cmd: 'docker inspect <id>', desc: 'Deep details (JSON) of container setup' },
-            { cmd: 'docker stats', desc: 'Live CPU/Memory resource usage' },
-            { cmd: 'docker cp file.txt <id>:/path', desc: 'Copy files between host and container' },
-            { cmd: 'docker rename <old> <new>', desc: 'Rename an existing container' },
-            { cmd: 'docker network create net', desc: 'Manage/create isolated virtual networks' },
-            { cmd: 'docker volume create vol', desc: 'Manage persistent storage volumes' }
-          ]
-        }
-      },
-      expert: {
-        title: 'Advanced Architecture & Orchestration',
-        description: 'Multi-stage builds, orchestration, clustering, and enterprise distribution.',
-        studyMaterials: [{ name: 'Start Docker Expert Study', link: '#', isInternal: true, internalRouteKey: 'expert' }],
-        studyContent: {
-          whatIsIt: 'Advanced Docker orchestration shifts focus from single containers to managing thousands of services, security, and cluster architectures.',
-          whyUseIt: 'Enterprise applications require High Availability (HA), zero-downtime rolling updates, and vast scalable node replication. ',
-          howToUseIt: 'These commands configure complex multi-service declarations, swarm mode clustering, and heavy operations.',
-          commands: [
-            { cmd: 'docker-compose up/down', desc: 'Run multi-container apps declaratively via yaml' },
-            { cmd: 'docker save / load', desc: 'Export/import images as tarballs' },
-            { cmd: 'docker export / import', desc: 'Container root filesystem backup' },
-            { cmd: 'docker system prune', desc: 'Cleanup heavily unused images/containers' },
-            { cmd: 'docker tag / push', desc: 'Tag an image and distribute to a registry' },
-            { cmd: 'docker swarm init', desc: 'Initialize native docker server clustering' },
-            { cmd: 'docker service create', desc: 'Manage decentralized clustered services' },
-            { cmd: 'docker stack deploy', desc: 'Full-stack distributed orchestration' },
-            { cmd: 'docker checkpoint', desc: 'Save & restore exact container execution state' }
-          ]
-        }
-      }
-    }
-  },
-  {
-    id: 'kubernetes',
-    name: 'Kubernetes',
-    icon: Server,
-    category: 'Containerization',
-    shortDesc: 'Open-source container orchestration system.',
-    concept: 'Automates deployment, scaling, and management of containerized applications. It groups containers that make up an application into logical units for easy management and discovery.',
-    advancedConcept: 'CRDs, Operators, Service Meshes, deep cluster networking (CNI), and cluster administration.',
-    levels: {
-      beginner: {
-        title: 'K8s Architecture & Pods',
-        description: 'Understanding Nodes, Pods, Deployments, and Services.',
-        studyMaterials: [
-          { name: 'Kubernetes.io Beginners Guide', link: '#' },
-          { name: 'Kubernetes Crash Course Part 1', link: 'https://www.youtube.com/watch?v=dfxrdoEQe00', isVideo: true }
-        ]
-      },
-      intermediate: {
-        title: 'Configurability & State',
-        description: 'ConfigMaps, Secrets, Ingress, PersistentVolumes, and StatefulSets.',
-        studyMaterials: [
-          { name: 'Kubernetes The Hard Way (Intro)', link: '#' },
-          { name: 'Kubernetes Crash Course Part 2', link: 'https://www.youtube.com/watch?v=6_gMoe7Ik8k', isVideo: true }
-        ]
-      },
-      expert: {
-        title: 'Operators & Cluster Admin',
-        description: 'Writing custom controllers, RBAC, NetworkPolicies, and CRDs.',
-        studyMaterials: [{ name: 'K8s Cluster Administration', link: '#' }]
-      }
-    }
-  },
+
+  // ===================== CI/CD =====================
   {
     id: 'jenkins',
     name: 'Jenkins',
     icon: Settings,
     category: 'CI/CD',
-    shortDesc: 'Open source automation server.',
-    concept: 'Jenkins is an automation server which enables developers around the world to reliably build, test, and deploy their software. It is highly extensible with thousands of plugins.',
-    advancedConcept: 'Jenkins Configuration as Code (JCasC), Shared Libraries, scalable agent provisioning, and advanced pipeline development.',
+    shortDesc: 'Widely used open-source automation server.',
+    concept: 'Jenkins builds, tests, and deploys your software reliably with thousands of plugins to connect virtually anything.',
+    advancedConcept: 'JCasC, Jenkins Groovy Shared Libraries, and sprawling agent architectures.',
     levels: {
       beginner: {
-        title: 'Jenkins Basics',
-        description: 'Installing Jenkins, creating Freestyle jobs, and basic triggers.',
-        studyMaterials: [
-          { name: 'Jenkins User Documentation', link: '#' },
-          { name: 'Jenkins Full Course', link: 'https://www.youtube.com/watch?v=FX322RVNGj4', isVideo: true }
-        ]
+        title: 'Freestyle Jobs',
+        description: 'Installation and basic job triggers.',
+        studyMaterials: [{ name: 'Jenkins Docs', link: 'https://www.jenkins.io/doc/' }]
       },
       intermediate: {
         title: 'Declarative Pipelines',
-        description: 'Writing Jenkinsfiles, using credentials, and multi-branch pipelines.',
-        studyMaterials: [{ name: 'Pipeline Syntax Guide', link: '#' }]
+        description: 'Jenkinsfiles, build stages, and credentials.',
+        studyMaterials: [{ name: 'Pipeline Syntax', link: 'https://www.jenkins.io/doc/book/pipeline/' }]
       },
       expert: {
-        title: 'JCasC & Shared Libraries',
-        description: 'Jenkins Configuration as Code and Groovy Shared Libraries.',
-        studyMaterials: [{ name: 'JCasC Documentation', link: '#' }]
+        title: 'JCasC & Groovy',
+        description: 'Configuration as Code and shared libraries.',
+        studyMaterials: [{ name: 'Shared Libraries Guide', link: 'https://www.jenkins.io/doc/book/pipeline/shared-libraries/' }]
       }
     }
   },
@@ -288,296 +263,322 @@ export const toolsData: ToolData[] = [
     name: 'GitHub Actions',
     icon: PlayCircle,
     category: 'CI/CD',
-    shortDesc: 'Automate workflows directly in your repository.',
-    concept: 'GitHub Actions makes it easy to automate all your software workflows. Build, test, and deploy your code right from GitHub with fully integrated CI/CD.',
-    advancedConcept: 'Creating Custom Actions, Self-hosted runners, Matrix builds, OIDC integrations for cloud authentication.',
+    shortDesc: 'Automate directly in your repository.',
+    concept: 'Action workflows run via YAML triggers based on GitHub events (like pushing code). Extremely seamless integration.',
+    advancedConcept: 'Matrix builds, custom TS/Docker actions, OIDC integration.',
     levels: {
       beginner: {
-        title: 'Workflow Basics',
-        description: 'Creating a basic workflow, understanding Steps, Jobs, and Events.',
-        studyMaterials: [{ name: 'GitHub Actions Intro', link: '#' }]
+        title: 'Workflows',
+        description: 'Steps, Jobs, Events.',
+        studyMaterials: [{ name: 'GitHub Actions Intro', link: 'https://docs.github.com/en/actions' }]
       },
       intermediate: {
-        title: 'Environments & Artifacts',
-        description: 'Using matrix builds, secrets, artifacts, and caching.',
-        studyMaterials: [{ name: 'Essential Features', link: '#' }]
+        title: 'Environments',
+        description: 'Secrets, artifacts, caching.',
+        studyMaterials: [{ name: 'Actions Best Practices', link: '#' }]
       },
       expert: {
-        title: 'Custom Actions & Runners',
-        description: 'Building custom TS/Docker actions, self-hosted runner infrastructure.',
-        studyMaterials: [{ name: 'Building Actions', link: '#' }]
+        title: 'Custom Builders',
+        description: 'Drafting custom actions and utilizing self-hosted runners.',
+        studyMaterials: [{ name: 'Creating Actions', link: 'https://docs.github.com/en/actions/creating-actions' }]
       }
     }
   },
   {
-    id: 'sonarqube',
-    name: 'SonarQube',
-    icon: Activity,
-    category: 'Code Quality',
-    shortDesc: 'Continuous code quality and security.',
-    concept: 'An open-source platform developed by SonarSource for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities.',
-    advancedConcept: 'Custom rule writing via XPath or Java plugins, complex quality gate strategies, and deep branch analysis.',
+    id: 'gitlab-ci',
+    name: 'GitLab CI',
+    icon: InfinityIcon,
+    category: 'CI/CD',
+    shortDesc: 'Integrated CI/CD platform by GitLab.',
+    concept: 'A powerful built-in CI/CD engine inside GitLab using .gitlab-ci.yml definition. Highly preferred in modern enterprise environments.',
+    advancedConcept: 'GitLab Runners, complex DAG pipelines, auto-scaling runners via Docker/K8s.',
     levels: {
       beginner: {
-        title: 'Understanding Code smells',
-        description: 'Basic integration with CI, understanding Bugs, Vulnerabilities, and Smells.',
-        studyMaterials: [{ name: 'Clean Code principles', link: '#' }]
+        title: 'Gitlab-ci.yml',
+        description: 'Stages, jobs, scripts.',
+        studyMaterials: [{ name: 'GitLab CI Quickstart', link: 'https://docs.gitlab.com/ee/ci/quick_start/' }]
       },
       intermediate: {
-        title: 'Quality Gates & Branching',
-        description: 'Setting up custom quality profiles, gates, and PR decoration.',
-        studyMaterials: [{ name: 'SonarQube Documentation', link: '#' }]
+        title: 'Artifacts & Caching',
+        description: 'Passing data between jobs and speed optimization.',
+        studyMaterials: [{ name: 'GitLab CI Variables', link: '#' }]
       },
       expert: {
-        title: 'Custom Rules',
-        description: 'Writing custom Sonar rules for niche requirements.',
-        studyMaterials: [{ name: 'Customizing SonarQube', link: '#' }]
+        title: 'Custom Runners',
+        description: 'Deploying and scaling runners on Kubernetes.',
+        studyMaterials: [{ name: 'GitLab Runners Architecture', link: '#' }]
+      }
+    }
+  },
+
+  // ===================== CONTAINERIZATION =====================
+  {
+    id: 'docker',
+    name: 'Docker',
+    icon: Box,
+    category: 'Containerization',
+    shortDesc: 'Platform for developing, shipping, and running containers.',
+    concept: 'OS-level virtualization delivering software in standardized units (containers) bundling code, dependencies, and environments.',
+    advancedConcept: 'Multi-stage builds, Distroless images, rootless containers, overlay networks.',
+    levels: {
+      beginner: {
+        title: 'Docker 101',
+        description: 'Images, Containers, Dockerfile.',
+        studyMaterials: [{ name: 'Start Docker Basic Study', link: '#', isInternal: true, internalRouteKey: 'beginner' }]
+      },
+      intermediate: {
+        title: 'Compose & Net',
+        description: 'Docker-compose, networking, persistent volumes.',
+        studyMaterials: [{ name: 'Start Docker Intermediate Study', link: '#', isInternal: true, internalRouteKey: 'intermediate' }]
+      },
+      expert: {
+        title: 'Architecture & Security',
+        description: 'Multi-stage, security scanning, rootless.',
+        studyMaterials: [{ name: 'Start Docker Expert Study', link: '#', isInternal: true, internalRouteKey: 'expert' }]
+      }
+    }
+  },
+
+  // ===================== ORCHESTRATION =====================
+  {
+    id: 'kubernetes',
+    name: 'Kubernetes',
+    icon: Globe2,
+    category: 'Orchestration',
+    shortDesc: 'Automates deployment, scaling, and management of containers.',
+    concept: 'K8s groups containers into logical units (Pods), orchestrating them across a clustered array of nodes.',
+    advancedConcept: 'CRDs, Operators, Statefulness, CNI networking, Service Meshes.',
+    levels: {
+      beginner: {
+        title: 'Pods & Deployments',
+        description: 'Basic resource architecture in K8s.',
+        studyMaterials: [{ name: 'Kubernetes Crash Course', link: 'https://www.youtube.com/watch?v=X48VuDVv0do', isVideo: true }]
+      },
+      intermediate: {
+        title: 'State & Networking',
+        description: 'ConfigMaps, PersistentVolumes, Ingress.',
+        studyMaterials: [{ name: 'Kubernetes Ingress Guide', link: '#' }]
+      },
+      expert: {
+        title: 'Cluster Administration',
+        description: 'RBAC, Operators, Network Policies.',
+        studyMaterials: [{ name: 'K8s The Hard Way', link: 'https://github.com/kelseyhightower/kubernetes-the-hard-way' }]
       }
     }
   },
   {
-    id: 'artifactory',
-    name: 'Artifactory',
-    icon: Package,
-    category: 'Artifact Repo',
-    shortDesc: 'Universal artifact repository manager.',
-    concept: 'JFrog Artifactory functions as a single source of truth for all packages, container images and Helm charts, as they move across the entire DevOps pipeline.',
-    advancedConcept: 'High availability clustering, advanced metadata properties, edge node distribution, and replication strategies.',
-    levels: {
-      beginner: {
-        title: 'Repo Management',
-        description: 'Difference between local, remote, and virtual repositories.',
-        studyMaterials: [{ name: 'JFrog Quickstart', link: '#' }]
-      },
-      intermediate: {
-        title: 'Build Integration',
-        description: 'Integrating Artifactory with Maven/Npm, understanding build-info.',
-        studyMaterials: [{ name: 'Artifactory Integrations', link: '#' }]
-      },
-      expert: {
-        title: 'Access & Replication',
-        description: 'RBAC, AQL (Artifactory Query Language), and multi-site replication.',
-        studyMaterials: [{ name: 'JFrog Advanced Admin', link: '#' }]
-      }
-    }
-  },
-  {
-    id: 'maven',
-    name: 'Maven',
-    icon: Wrench,
-    category: 'Build Tool',
-    shortDesc: 'Project management and comprehension tool primarily for Java.',
-    concept: 'Maven uses a Project Object Model (POM) to manage a project\'s build, reporting, and documentation from a central piece of information.',
-    advancedConcept: 'Custom Plugin development, intricate build profiles, and complex multi-module reactor builds.',
-    levels: {
-      beginner: {
-        title: 'Maven Fundamentals',
-        description: 'Understanding POM.xml, dependencies, and basic lifecycles.',
-        studyMaterials: [{ name: 'Maven in 5 Minutes', link: '#' }]
-      },
-      intermediate: {
-        title: 'Plugins & Profiles',
-        description: 'Using plugins effectively, setting up environment-specific profiles.',
-        studyMaterials: [{ name: 'Maven Comprehensive Guide', link: '#' }]
-      },
-      expert: {
-        title: 'Custom Plugins',
-        description: 'Writing your own Mojos (Maven Plugins) and managing huge multi-modules.',
-        studyMaterials: [{ name: 'Developing Maven Plugins', link: '#' }]
-      }
-    }
-  },
-  {
-    id: 'gradle',
-    name: 'Gradle',
+    id: 'helm',
+    name: 'Helm',
     icon: Layers,
-    category: 'Build Tool',
-    shortDesc: 'Highly flexible build automation tool.',
-    concept: 'Gradle is an open-source build automation tool focused on flexibility and performance. Gradle build scripts are written using a Groovy or Kotlin DSL.',
-    advancedConcept: 'Build cache configuration, deep dependency resolution strategies, and custom task types in Kotlin.',
+    category: 'Orchestration',
+    shortDesc: 'The package manager for Kubernetes.',
+    concept: 'Helm helps you manage Kubernetes applications. Helm Charts help you define, install, and upgrade even the most complex K8s apps.',
+    advancedConcept: 'Chart museum, templating pipelines, creating completely dynamic resources.',
     levels: {
       beginner: {
-        title: 'Gradle Basics',
-        description: 'Structure of build.gradle, basic tasks, and dependencies.',
-        studyMaterials: [{ name: 'Gradle User Manual', link: '#' }]
+        title: 'Installing Charts',
+        description: 'helm install, helm upgrade, public repos.',
+        studyMaterials: [{ name: 'Helm Docs', link: 'https://helm.sh/docs/' }]
       },
       intermediate: {
-        title: 'Scripting & Plugins',
-        description: 'Applying plugins, writing custom tasks, managing multi-project builds.',
-        studyMaterials: [{ name: 'Gradle Multi-Project Builds', link: '#' }]
+        title: 'Creating Charts',
+        description: 'Templating, values.yaml, loops and conditionals.',
+        studyMaterials: [{ name: 'Chart Development Guide', link: '#' }]
       },
       expert: {
-        title: 'Performance & Kotlin DSL',
-        description: 'Migrating to Kotlin DSL, build cache tuning, and initialization scripts.',
-        studyMaterials: [{ name: 'Advanced Gradle', link: '#' }]
+        title: 'Advanced Templating',
+        description: 'Hooks, complex dependency management.',
+        studyMaterials: [{ name: 'Helm Best Practices', link: '#' }]
       }
     }
   },
   {
-    id: 'intellij',
-    name: 'IntelliJ IDEA',
-    icon: Code,
-    category: 'IDE',
-    shortDesc: 'Capable and Ergonomic IDE for Java and more.',
-    concept: 'Leading Java IDE outperforming others regarding intelligence. It provides comprehensive tooling, smart code completion, and out-of-the-box framework support.',
-    advancedConcept: 'Structural search and replace, memory profiling, remote debugging, and custom plugin creation.',
-    levels: {
-      beginner: {
-        title: 'Getting Started',
-        description: 'Navigation, basic refactoring, running/debugging code.',
-        studyMaterials: [{ name: 'IntelliJ IDEA Basics', link: '#' }]
-      },
-      intermediate: {
-        title: 'Productivity Tricks',
-        description: 'Advanced refactoring, Live Templates, Git integration in IDE.',
-        studyMaterials: [{ name: 'JetBrains Guide', link: '#' }]
-      },
-      expert: {
-        title: 'Deep Integrations',
-        description: 'Profilers, Structural Search, customizing inspections.',
-        studyMaterials: [{ name: 'Advanced Productivity Guide', link: '#' }]
-      }
-    }
-  },
-  {
-    id: 'eclipse',
-    name: 'Eclipse',
-    icon: Terminal,
-    category: 'IDE',
-    shortDesc: 'A popular open source IDE, mainly for Java.',
-    concept: 'The Eclipse platform which provides the foundation for the Eclipse IDE is composed of plug-ins and is designed to be extensible using additional plug-ins.',
-    advancedConcept: 'Workspace management, Eclipse Rich Client Platform (RCP) development.',
-    levels: {
-      beginner: {
-        title: 'Eclipse 101',
-        description: 'Setting up perspectives, compiling, and running projects.',
-        studyMaterials: [{ name: 'Eclipse Foundation Tutorials', link: '#' }]
-      },
-      intermediate: {
-        title: 'Shortcuts & Plugins',
-        description: 'Keyboard shortcuts, working with Marketplace plugins (e.g. SonarLint).',
-        studyMaterials: [{ name: 'Effective Eclipse', link: '#' }]
-      },
-      expert: {
-        title: 'RCP Development',
-        description: 'Building custom tools leveraging the Eclipse RCP ecosystem.',
-        studyMaterials: [{ name: 'Eclipse RCP Architecture', link: '#' }]
-      }
-    }
-  },
-  {
-    id: 'ansible',
-    name: 'Ansible',
-    icon: Terminal,
-    category: 'Configuration Management',
-    shortDesc: 'Radically simple IT automation system.',
-    concept: 'Ansible is an open-source software provisioning, configuration management, and application-deployment tool enabling infrastructure as code.',
-    advancedConcept: 'Advanced playbooks, custom modules, Ansible Tower/AWX, and dynamic inventories.',
-    levels: {
-      beginner: {
-        title: 'Ansible Basics',
-        description: 'Understanding YAML, ad-hoc commands, and basic playbooks.',
-        studyMaterials: [
-          { name: 'Ansible Documentation', link: '#' },
-          { name: 'Ansible Full Course', link: 'https://www.youtube.com/watch?v=EcnqJbxBcM0', isVideo: true }
-        ]
-      },
-      intermediate: {
-        title: 'Roles & Variables',
-        description: 'Structuring with roles, variable precedence, and Vault.',
-        studyMaterials: [{ name: 'Ansible Best Practices', link: '#' }]
-      },
-      expert: {
-        title: 'Custom Modules & AWX',
-        description: 'Writing custom python modules and managing enterprise AWX.',
-        studyMaterials: [{ name: 'Extending Ansible', link: '#' }]
-      }
-    }
-  },
-  {
-    id: 'aws',
-    name: 'AWS',
-    icon: Server,
-    category: 'Cloud Platform',
-    shortDesc: 'Comprehensive and broadly adopted cloud platform.',
-    concept: 'Amazon Web Services provides on-demand cloud computing platforms and APIs to individuals, companies, and governments, on a metered pay-as-you-go basis.',
-    advancedConcept: 'Serverless architectures, Transit Gateways, multi-region active-active deployments, and advanced IAM policing.',
-    levels: {
-      beginner: {
-        title: 'Core Services',
-        description: 'EC2, S3, IAM, and basic VPC concepts.',
-        studyMaterials: [
-          { name: 'Getting Started with AWS', link: '#' },
-          { name: 'AWS Full Course', link: 'https://www.youtube.com/watch?v=3YkSb9oO14o', isVideo: true }
-        ]
-      },
-      intermediate: {
-        title: 'Scaling & Databases',
-        description: 'Auto Scaling, ALB, RDS, and Elasticache architectures.',
-        studyMaterials: [{ name: 'AWS High Availability Guide', link: '#' }]
-      },
-      expert: {
-        title: 'Advanced Architecture',
-        description: 'Direct Connect, Organizations, and complex Serverless (Lambda, EventBridge).',
-        studyMaterials: [{ name: 'AWS Well-Architected Framework', link: '#' }]
-      }
-    }
-  },
-  {
-    id: 'monitoring',
-    name: 'Monitoring (Prometheus & Grafana)',
+    id: 'argocd',
+    name: 'ArgoCD',
     icon: Activity,
-    category: 'Monitoring & Observability',
-    shortDesc: 'Systems monitoring and alerting toolkit.',
-    concept: 'Observability tools like Prometheus and Grafana collect and store metrics as time series data to monitor the exact performance footprint of infrastructure over time.',
-    advancedConcept: 'PromQL deep dives, AlertManager routing trees, and custom exporter development.',
+    category: 'CI/CD',
+    shortDesc: 'Declarative, GitOps continuous delivery tool for K8s.',
+    concept: 'Pulls the state declared in your Git repo and ensures your Kubernetes cluster strictly matches it. Say goodbye to direct `kubectl apply`.',
+    advancedConcept: 'App of Apps pattern, SSO integration, ApplicationSets.',
     levels: {
       beginner: {
-        title: 'Monitoring Fundamentals',
-        description: 'Setting up Node Exporters, Prometheus scraping, and standard Grafana dashboards.',
-        studyMaterials: [
-          { name: 'Prometheus Official Docs', link: '#' },
-          { name: 'Monitoring Full Course', link: 'https://www.youtube.com/watch?v=DXZUunEeHqM', isVideo: true }
-        ]
+        title: 'GitOps Basics',
+        description: 'Installing Argo, tracking a basic repo.',
+        studyMaterials: [{ name: 'ArgoCD Getting Started', link: 'https://argo-cd.readthedocs.io/en/stable/getting_started/' }]
       },
       intermediate: {
-        title: 'Custom Metrics & PromQL',
-        description: 'Instrumenting custom apps, writing PromQL queries, and creating dynamic variables in Grafana.',
-        studyMaterials: [{ name: 'PromQL For Beginners', link: '#' }]
+        title: 'Helm & Diffing',
+        description: 'Deploying Helm charts via Argo, handling drift.',
+        studyMaterials: [{ name: 'Sync Options & Policies', link: '#' }]
       },
       expert: {
-        title: 'Alerting at Scale',
-        description: 'High availability Prometheus configs (Thanos) and complex AlertManager webhooks.',
-        studyMaterials: [{ name: 'Thanos Documentation', link: '#' }]
+        title: 'App of Apps',
+        description: 'Managing dozens of clusters across environments scalably.',
+        studyMaterials: [{ name: 'App of Apps Pattern', link: 'https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/' }]
       }
     }
   },
+
+  // ===================== INFRASTRUCTURE AS CODE =====================
   {
     id: 'terraform',
     name: 'Terraform',
-    icon: Box,
+    icon: Layers,
     category: 'Infrastructure as Code',
-    shortDesc: 'Safely and predictably create, change, and improve infrastructure.',
-    concept: 'Terraform is an infrastructure as code software tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share.',
-    advancedConcept: 'Custom providers, Terraform Cloud, remote state management, and complex workspace handling.',
+    shortDesc: 'Automate multi-cloud infrastructure declaratively.',
+    concept: 'HashiCorp tool enabling you to build, change, and version cloud infrastructure via HCL files.',
+    advancedConcept: 'Complex modularization, remote state locks, custom providers.',
     levels: {
       beginner: {
         title: 'Terraform Basics',
-        description: 'Providers, resources, variables, and the basic init/plan/apply state cycle.',
-        studyMaterials: [
-          { name: 'Terraform Intro Docs', link: '#' },
-          { name: 'Terraform Full Course', link: 'https://www.youtube.com/watch?v=S9mohJI_R34', isVideo: true }
-        ]
+        description: 'Providers, init, plan, apply.',
+        studyMaterials: [{ name: 'Terraform Full Course', link: 'https://www.youtube.com/watch?v=S9mohJI_R34', isVideo: true }]
       },
       intermediate: {
-        title: 'Modules & State',
-        description: 'Creating reusable modules, outputs, and remote state backends.',
-        studyMaterials: [{ name: 'Terraform Modules Guide', link: '#' }]
+        title: 'State & Modules',
+        description: 'Variables, output, external backends, reusable modules.',
+        studyMaterials: [{ name: 'Terraform Best Practices', link: '#' }]
       },
       expert: {
-        title: 'Complex Automations',
-        description: 'Workspaces, for_each functions, dynamic blocks, and CI/CD integrations.',
+        title: 'Enterprise Automation',
+        description: 'Workspaces, CI/CD integrations, dynamic blocks.',
         studyMaterials: [{ name: 'HashiCorp Advanced TF', link: '#' }]
+      }
+    }
+  },
+  {
+    id: 'pulumi',
+    name: 'Pulumi',
+    icon: Code,
+    category: 'Infrastructure as Code',
+    shortDesc: 'Developer-first infrastructure as code.',
+    concept: 'Instead of HCL/YAML, use actual programming languages (Python, Go, JS) to write, test, and deploy infrastructure.',
+    advancedConcept: 'Unit testing infrastructure, multi-cloud abstraction layers.',
+    levels: {
+      beginner: {
+        title: 'Pulumi Setup',
+        description: 'Using existing language knowledge for cloud resources.',
+        studyMaterials: [{ name: 'Pulumi Intro', link: 'https://www.pulumi.com/docs/' }]
+      },
+      intermediate: {
+        title: 'State Management',
+        description: 'Managing stacks and Pulumi service.',
+        studyMaterials: [{ name: 'Managing Pulumi Stacks', link: '#' }]
+      },
+      expert: {
+        title: 'Testing Infra',
+        description: 'Unit testing and mocking cloud resources in code.',
+        studyMaterials: [{ name: 'Pulumi Testing', link: '#' }]
+      }
+    }
+  },
+
+  // ===================== CONFIGURATION MANAGEMENT =====================
+  {
+    id: 'ansible',
+    name: 'Ansible',
+    icon: TerminalSquare,
+    category: 'Configuration Management',
+    shortDesc: 'Agentless IT automation system.',
+    concept: 'Provision, configure, and manage servers via SSH using highly readable YAML playbooks.',
+    advancedConcept: 'Custom Python modules, Ansible AWX, dynamic EC2 inventories.',
+    levels: {
+      beginner: {
+        title: 'Ansible Basics',
+        description: 'Ad-hoc commands, basic playbooks, inventory.',
+        studyMaterials: [{ name: 'Ansible Docs', link: 'https://docs.ansible.com/' }]
+      },
+      intermediate: {
+        title: 'Variables & Roles',
+        description: 'Structuring with roles, Ansible Galaxy, Vault.',
+        studyMaterials: [{ name: 'Ansible Best Practices', link: '#' }]
+      },
+      expert: {
+        title: 'Enterprise Ansible',
+        description: 'Dynamic inventories, custom modules, AWX management.',
+        studyMaterials: [{ name: 'Advanced Ansible', link: '#' }]
+      }
+    }
+  },
+
+  // ===================== MONITORING & OBSERVABILITY =====================
+  {
+    id: 'prometheus',
+    name: 'Prometheus & Grafana',
+    icon: BarChart,
+    category: 'Monitoring & Observability',
+    shortDesc: 'Industry standard metrics scraping and dashboarding.',
+    concept: 'Prometheus scrapes time-series metrics from nodes. Grafana visuals those metrics into beautiful, actionable dashboards.',
+    advancedConcept: 'PromQL deep dives, AlertManager configurations, Thanos distributed scaling.',
+    levels: {
+      beginner: {
+        title: 'Setup & Dashboards',
+        description: 'Node Exporter, scraping, standard Grafana dashboards.',
+        studyMaterials: [{ name: 'Prometheus Official Docs', link: 'https://prometheus.io/docs/' }]
+      },
+      intermediate: {
+        title: 'PromQL & Alerts',
+        description: 'Writing complex queries, creating Grafana alerts.',
+        studyMaterials: [{ name: 'PromQL Intro', link: '#' }]
+      },
+      expert: {
+        title: 'Scaling Prometheus',
+        description: 'Federation, Thanos, custom application instrumentation.',
+        studyMaterials: [{ name: 'Thanos Architecture', link: '#' }]
+      }
+    }
+  },
+  {
+    id: 'datadog',
+    name: 'Datadog',
+    icon: Activity,
+    category: 'Monitoring & Observability',
+    shortDesc: 'Enterprise observability and security in the cloud.',
+    concept: 'A SaaS-based data analytics platform providing monitoring of servers, databases, tools, and services natively.',
+    advancedConcept: 'APM distributed tracing, synthetic checks, SIEM capabilities.',
+    levels: {
+      beginner: {
+        title: 'Agent Setup',
+        description: 'Deploying agents, exploring infrastructure metrics.',
+        studyMaterials: [{ name: 'Datadog Quickstart', link: 'https://docs.datadoghq.com/' }]
+      },
+      intermediate: {
+        title: 'APM & Logs',
+        description: 'Application Performance Monitoring and Log pipelines.',
+        studyMaterials: [{ name: 'Datadog APM', link: '#' }]
+      },
+      expert: {
+        title: 'Monitors & Tracing',
+        description: 'Complex monitor formulas and distributed tracing flows.',
+        studyMaterials: [{ name: 'Distributed Tracing', link: '#' }]
+      }
+    }
+  },
+
+  // ===================== CLOUD PLATFORMS =====================
+  {
+    id: 'aws',
+    name: 'AWS',
+    icon: CloudCog,
+    category: 'Cloud Platforms',
+    shortDesc: 'Complete cloud platform infrastructure.',
+    concept: 'Amazon Web Services is the market-leading platform offering IaaS, PaaS, and Serverless computing directly over the internet.',
+    advancedConcept: 'Multi-region routing, Transit Gateways, robust IAM policies.',
+    levels: {
+      beginner: {
+        title: 'Core Services',
+        description: 'EC2, S3, IAM, basic VPC network boundaries.',
+        studyMaterials: [{ name: 'AWS Cloud Practitioner Study', link: '#' }]
+      },
+      intermediate: {
+        title: 'Scaling',
+        description: 'Auto Scaling, ALB/ELB, ECS, RDS databases.',
+        studyMaterials: [{ name: 'AWS Free Tier Guides', link: '#' }]
+      },
+      expert: {
+        title: 'Enterprise Architect',
+        description: 'Well-Architected Framework, Control Tower, EKS deep-dives.',
+        studyMaterials: [{ name: 'AWS Architecture Center', link: '#' }]
       }
     }
   }

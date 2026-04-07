@@ -14,7 +14,7 @@ export const LevelSection: React.FC<LevelSectionProps> = ({ level, data, theme }
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLinkClick = (material: any, e: React.MouseEvent) => {
+  const handleLinkClick = (material: LevelData['studyMaterials'][0], e: React.MouseEvent) => {
     if (material.isInternal) {
       e.preventDefault();
       const currentPath = location.pathname.endsWith('/') ? location.pathname.slice(0, -1) : location.pathname;
