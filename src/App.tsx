@@ -16,11 +16,11 @@ const App: React.FC = () => {
         {/* General DevOps Routes */}
         <Route 
           path="general" 
-          element={<SpacePage spaceId="general" spaceName="General DevOps" />} 
+          element={<SpacePage spaceId="general" spaceName="DevOps Roadmap" />} 
         />
         <Route 
           path="general/:toolId" 
-          element={<SpacePage spaceId="general" spaceName="General DevOps" />} 
+          element={<SpacePage spaceId="general" spaceName="DevOps Roadmap" />} 
         />
         <Route 
           path="general/:toolId/study/:levelId" 

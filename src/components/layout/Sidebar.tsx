@@ -24,7 +24,7 @@ export const Sidebar: React.FC = () => {
           className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
         >
           <BookOpen size={18} />
-          <span>General DevOps</span>
+          <span>DevOps Roadmap</span>
         </NavLink>
 
         <NavLink 
