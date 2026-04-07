@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { BookOpen, ShieldAlert, LayoutDashboard, Terminal } from 'lucide-react';
+import { BookOpen, ShieldAlert, LayoutDashboard, Terminal, Bot } from 'lucide-react';
 import './Sidebar.css';
 
 export const Sidebar: React.FC = () => {
@@ -25,6 +25,14 @@ export const Sidebar: React.FC = () => {
         >
           <BookOpen size={18} />
           <span>DevOps Roadmap</span>
+        </NavLink>
+
+        <NavLink 
+          to="/ai-mentor" 
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <Bot size={18} />
+          <span>AI Mentor</span>
         </NavLink>
 
         <NavLink 

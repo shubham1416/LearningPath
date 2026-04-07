@@ -3,9 +3,14 @@ import { WebSocketServer } from 'ws';
 import Docker from 'dockerode';
 import http from 'http';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import { GoogleGenAI } from '@google/genai';
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
+app.use(express.json()); // Allow JSON body parsing
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 // On Windows with Docker Desktop, connect to the active desktop-linux context pipe
@@ -96,6 +101,48 @@ wss.on('connection', async (ws) => {
     console.error('Failed to spawn playground:', err);
     ws.send('\r\n\x1b[31m[Error]\x1b[0m Failed to spawn isolated container. Is Docker running?\r\n');
     ws.close();
+  }
+});
+
+// AI Mentor Endpoint
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message, toolName, mode, history } = req.body;
+    
+    // Initialize AI client
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    
+    // Construct System Prompt based on mode
+    let systemInstruction = '';
+    if (mode === 'quiz') {
+      systemInstruction = `You are an expert DevOps interviewer. The user wants to test their knowledge on the tool: ${toolName}. Ask them a challenging, open-ended question about ${toolName}. When they answer, critically evaluate it, format code with markdown if needed, and then ask the NEXT question. Keep responses short and directly focused on the technical concepts.`;
+    } else {
+      systemInstruction = `You are a patient expert DevOps mentor. The user is stuck while learning the tool: ${toolName}. Help them understand where they are stuck step-by-step. Break down complex concepts simply. Format terminal commands and code precisely with markdown.`;
+    }
+
+    // Format history for Gemini API. 
+    // Usually it accepts an array of {role, parts:[{text}]}. In @google/genai we can pass an array of contents.
+    const contents = history ? history.map(h => ({
+      role: h.role === 'ai' ? 'model' : 'user',
+      parts: [{ text: h.content }]
+    })) : [];
+    
+    contents.push({ role: 'user', parts: [{ text: message }] });
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: contents,
+      config: {
+        systemInstruction: systemInstruction,
+        temperature: 0.7
+      }
+    });
+
+    res.json({ text: response.text });
+
+  } catch (error) {
+    console.error('AI Error:', error);
+    res.status(500).json({ error: 'Failed to communicate with AI Mentor. Did you set GEMINI_API_KEY in the backend/.env?' });
   }
 });
 

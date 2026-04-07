@@ -5,6 +5,7 @@ import { SpacePage } from './pages/SpacePage';
 import { StudyMaterialPage } from './pages/StudyMaterialPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { PlaygroundPage } from './pages/PlaygroundPage';
+import { AIMentorPage } from './pages/AIMentorPage';
 
 const App: React.FC = () => {
   return (
@@ -51,6 +52,12 @@ const App: React.FC = () => {
         <Route 
           path="playground" 
           element={<PlaygroundPage />} 
+        />
+        
+        {/* AI Mentor */}
+        <Route 
+          path="ai-mentor" 
+          element={<AIMentorPage />} 
         />
       </Route>
       
