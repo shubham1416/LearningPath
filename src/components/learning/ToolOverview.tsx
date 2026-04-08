@@ -1,6 +1,7 @@
 import React from 'react';
 import type { ToolData } from '../../data/toolsData';
 import { LevelSection } from './LevelSection';
+import { ToolAIQuiz } from './ToolAIQuiz';
 import './ToolOverview.css';
 
 interface ToolOverviewProps {
@@ -34,6 +35,8 @@ export const ToolOverview: React.FC<ToolOverviewProps> = ({ tool }) => {
         <h3 className="advanced-title">Advanced Horizons</h3>
         <p className="concept-text">{tool.advancedConcept}</p>
       </div>
+
+      <ToolAIQuiz toolName={tool.name} />
 
       <div className="levels-container">
         <LevelSection 

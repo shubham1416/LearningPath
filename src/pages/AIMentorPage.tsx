@@ -1,19 +1,42 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { toolsData } from '../data/toolsData';
-import { Bot, User, Send, Compass, HelpCircle, BrainCircuit } from 'lucide-react';
+import { Bot, User, Send, Compass, HelpCircle, BrainCircuit, CheckCircle } from 'lucide-react';
 import './AIMentorPage.css';
 
 type Mode = 'quiz' | 'help' | null;
+type Difficulty = 'easy' | 'intermediate' | 'expert';
 type Message = { role: 'user' | 'ai'; content: string };
+type Progress = Record<string, { easy: boolean, intermediate: boolean, expert: boolean }>;
 
 export const AIMentorPage: React.FC = () => {
   const [selectedToolId, setSelectedToolId] = useState<string>('');
   const [mode, setMode] = useState<Mode>(null);
+  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
+  const [progress, setProgress] = useState<Progress>(() => {
+    const saved = localStorage.getItem('devops_tool_progress');
+    return saved ? JSON.parse(saved) : {};
+  });
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('devops_tool_progress', JSON.stringify(progress));
+  }, [progress]);
+
+  const handleMarkComplete = () => {
+    if (!selectedToolId || mode !== 'quiz') return;
+    setProgress(prev => ({
+      ...prev,
+      [selectedToolId]: {
+        ...(prev[selectedToolId] || { easy: false, intermediate: false, expert: false }),
+        [difficulty]: true
+      }
+    }));
+  };
+
 
   const selectedTool = toolsData.find(t => t.id === selectedToolId);
 
@@ -32,7 +55,7 @@ export const AIMentorPage: React.FC = () => {
     // Auto-fire first message from AI based on mode
     let initialGreeting = '';
     if (selectedMode === 'quiz') {
-      initialGreeting = `Awesome! Let's test your knowledge on **${selectedTool.name}**. I will ask you a challenging question. Ready?`;
+      initialGreeting = `Awesome! Let's test your knowledge on **${selectedTool.name}** at the **${difficulty.toUpperCase()}** level. I will ask you a challenging question. Ready?`;
     } else {
       initialGreeting = `Hi! I'm here to help you understand **${selectedTool.name}**. Where are you getting stuck?`;
     }
@@ -60,7 +83,8 @@ export const AIMentorPage: React.FC = () => {
         message: userText || "Generate the first question",
         toolName: toolName,
         mode: currentMode,
-        history: isSilentInitialize ? [] : chatHistory // pass old history to keep context
+        history: isSilentInitialize ? [] : chatHistory,
+        difficulty: currentMode === 'quiz' ? difficulty : undefined
       };
 
       const response = await fetch('http://localhost:3001/api/chat', {
@@ -118,6 +142,19 @@ export const AIMentorPage: React.FC = () => {
 
         {selectedToolId && !mode && (
           <div className="mode-selection">
+            <div className="difficulty-settings" style={{ marginBottom: '15px' }}>
+              <label>Quiz Difficulty</label>
+              <select 
+                value={difficulty} 
+                onChange={(e) => setDifficulty(e.target.value as Difficulty)}
+                className="tool-select"
+              >
+                <option value="easy">Easy</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="expert">Expert</option>
+              </select>
+            </div>
+
             <button className="mode-btn quiz" onClick={() => handleStartInteraction('quiz')}>
               <BrainCircuit size={20} />
               <div className="btn-text">
@@ -136,10 +173,23 @@ export const AIMentorPage: React.FC = () => {
           </div>
         )}
 
+
         {mode && (
-          <button className="reset-btn" onClick={resetSession}>
-            End Conversation
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {mode === 'quiz' && (
+              <button 
+                className={`mark-complete-btn ${progress[selectedToolId]?.[difficulty] ? 'passed' : ''}`} 
+                onClick={handleMarkComplete} 
+                disabled={progress[selectedToolId]?.[difficulty]}
+              >
+                <CheckCircle size={18} />
+                {progress[selectedToolId]?.[difficulty] ? 'Module Passed' : 'Mark Module Complete'}
+              </button>
+            )}
+            <button className="reset-btn" onClick={resetSession}>
+              End Conversation
+            </button>
+          </div>
         )}
       </div>
 

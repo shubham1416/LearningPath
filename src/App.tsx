@@ -6,6 +6,7 @@ import { StudyMaterialPage } from './pages/StudyMaterialPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { PlaygroundPage } from './pages/PlaygroundPage';
 import { AIMentorPage } from './pages/AIMentorPage';
+import { ProgressPage } from './pages/ProgressPage';
 
 const App: React.FC = () => {
   return (
@@ -28,18 +29,10 @@ const App: React.FC = () => {
           element={<StudyMaterialPage />} 
         />
         
-        {/* CDS DevSecOps Nav Routes */}
+        {/* My Progress */}
         <Route 
-          path="cds-devsecops" 
-          element={<SpacePage spaceId="cds-devsecops" spaceName="CDS DevSecOps Triage" />} 
-        />
-        <Route 
-          path="cds-devsecops/:toolId" 
-          element={<SpacePage spaceId="cds-devsecops" spaceName="CDS DevSecOps Triage" />} 
-        />
-        <Route 
-          path="cds-devsecops/:toolId/study/:levelId" 
-          element={<StudyMaterialPage />} 
+          path="progress" 
+          element={<ProgressPage />} 
         />
         
         {/* Practice Labs */}

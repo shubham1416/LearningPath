@@ -1,0 +1,256 @@
+.progress-page {
+  padding: 32px 40px;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.progress-page .page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.progress-page .page-header h1 {
+  font-size: 2.5rem;
+}
+
+.progress-page .subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* ===== Overall Stats ===== */
+.overall-stats {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 32px 36px;
+}
+
+.stat-ring {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.ring-svg {
+  width: 120px;
+  height: 120px;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 10;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: url(#progressGrad);
+  stroke: #00d2ff;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.8s ease;
+}
+
+.ring-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-percent {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.ring-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-details {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-icon {
+  color: var(--secondary-blue, #00d2ff);
+}
+
+.stat-icon.gold {
+  color: #f7b733;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+/* ===== Categories ===== */
+.progress-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.category-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-color, #fff);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tools-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+/* ===== Tool Card ===== */
+.tool-progress-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.2s;
+}
+
+.tool-progress-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tool-progress-card.mastered {
+  border-color: rgba(247, 183, 51, 0.2);
+}
+
+.tpc-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tpc-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--accent-teal, #00ffaa);
+  flex-shrink: 0;
+}
+
+.tpc-info {
+  flex: 1;
+}
+
+.tpc-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color, #fff);
+  margin-bottom: 2px;
+}
+
+.tpc-completion {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.mastered-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f7b733;
+  background: rgba(247, 183, 51, 0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(247, 183, 51, 0.2);
+}
+
+/* Progress Bar */
+.tpc-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tpc-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d2ff, #00ffaa);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.tool-progress-card.mastered .tpc-bar-fill {
+  background: linear-gradient(90deg, #f7b733, #ff9900);
+}
+
+/* Level Pills */
+.tpc-levels {
+  display: flex;
+  gap: 10px;
+}
+
+.tpc-level {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tpc-level.done {
+  color: #00ffaa;
+  background: rgba(0, 255, 170, 0.06);
+  border-color: rgba(0, 255, 170, 0.15);
+}
+
+.tool-progress-card.mastered .tpc-level.done {
+  color: #f7b733;
+  background: rgba(247, 183, 51, 0.06);
+  border-color: rgba(247, 183, 51, 0.15);
+}
