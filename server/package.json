@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "build": "echo 'No build step for server'"
   },
+
   "dependencies": {
     "@google/genai": "^1.48.0",
     "cors": "^2.8.6",

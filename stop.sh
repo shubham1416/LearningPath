@@ -5,13 +5,13 @@ echo "    DevOps Mastery - Stop All Services    "
 echo "=========================================="
 
 echo ""
-echo "[1/2] Stopping Node.js processes (Backend + Frontend)..."
-pkill -f "node backend/server.js" 2>/dev/null
+echo "[1/2] Stopping Node.js processes..."
+pkill -f "node server/server.js" 2>/dev/null
 pkill -f "vite" 2>/dev/null
 if [ $? -eq 0 ]; then
-    echo "      All Node.js processes stopped."
+    echo "      Processes stopped."
 else
-    echo "      No running Node.js processes found."
+    echo "      No running processes found."
 fi
 
 echo ""

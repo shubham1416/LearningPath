@@ -21,7 +21,7 @@ const wss = new WebSocketServer({ server });
 // On Windows with Docker Desktop, connect to the active desktop-linux context pipe
 const docker = new Docker({ socketPath: '//./pipe/dockerDesktopLinuxEngine' });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 8080;
 const PLAYGROUND_IMAGE = 'devops-playground:latest'; // Custom image built from infra/Dockerfile
 
 // Verify local image exists (devops-playground is built locally, not on Docker Hub)
@@ -144,6 +144,11 @@ async function callGeminiWithRetry(ai, contents, systemInstruction) {
   throw lastError;
 }
 
+// Serve frontend static files from ../client/dist
+const distPath = path.join(__dirname, '..', 'client', 'dist');
+app.use(express.static(distPath));
+
+// API Routes
 app.post('/api/chat', async (req, res) => {
   try {
     const { message, toolName, mode, history, difficulty } = req.body;
@@ -179,6 +184,9 @@ app.post('/api/chat', async (req, res) => {
       : `AI Error: ${error.message || 'Unknown error'}`;
     res.status(isOverloaded ? 503 : 500).json({ error: errMsg });
   }
+// Catch-all route for SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 server.listen(PORT, () => {

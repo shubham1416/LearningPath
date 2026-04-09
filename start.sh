@@ -11,21 +11,14 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-# 2. Install Frontend Dependencies
+# 2. Install Dependencies
 echo ""
-echo "[1/4] Installing Frontend Dependencies..."
+echo "[1/4] Installing All Dependencies..."
 npm install
 
-# 3. Install Backend Dependencies
+# 3. Build the Isolated Playground Docker Image
 echo ""
-echo "[2/4] Installing Backend Dependencies..."
-cd backend
-npm install
-cd ..
-
-# 4. Build the Isolated Playground Docker Image
-echo ""
-echo "[3/4] Building the Isolated Playground Image..."
+echo "[2/4] Building the Isolated Playground Image..."
 docker build -t devops-playground infra/
 
 if [ $? -ne 0 ]; then
@@ -33,19 +26,26 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# 4. Build Frontend
+echo ""
+echo "[3/4] Building Frontend..."
+npm run build --workspace=client
+
 # 5. Start the backend server in the background
 echo ""
-echo "[4/4] Starting Playground Backend (Port 3001)..."
-node backend/server.js &
+echo "[4/4] Starting Playground Backend (Port 8080)..."
+node server/server.js &
 BACKEND_PID=$!
 
 # Ensure backend stops when the script exits
 trap "kill $BACKEND_PID" EXIT
 
-# 6. Start the frontend Vite server
 echo ""
 echo "=========================================="
 echo "🚀 Playground is LIVE!"
-echo "Starting frontend server..."
+echo "Backend is running (with static frontend) at http://localhost:8080"
 echo "=========================================="
-npm run dev
+
+# Keep script running to maintain the background process
+wait $BACKEND_PID
+

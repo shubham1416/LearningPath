@@ -3,14 +3,12 @@ echo ==========================================
 echo    DevOps Mastery Playground Starter
 echo ==========================================
 
-echo [1/4] Installing Frontend Dependencies...
+echo [1/4] Installing All Dependencies (Root Workspace)...
 call npm install
 
 echo.
-echo [2/4] Installing Backend Dependencies...
-cd backend
-call npm install
-cd ..
+echo [2/4] Building Frontend...
+call npm run build --workspace=client
 
 echo.
 echo [3/4] Building the Isolated Playground Image...
@@ -23,13 +21,13 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [4/4] Starting Playground Backend (Port 3001)...
-start "Playground Backend" cmd /c "node backend/server.js"
+echo [4/4] Starting Playground Backend (Port 8080)...
+start "Playground Backend" cmd /c "node server/server.js"
 
 echo.
 echo ==========================================
-echo 🚀 Playground is starting up...
+echo 🚀 Playground is LIVE at http://localhost:8080
 echo ==========================================
-npm run dev
+
 
 pause

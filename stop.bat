@@ -4,12 +4,12 @@ echo    DevOps Mastery - Stop All Services
 echo ==========================================
 
 echo.
-echo [1/2] Stopping Node.js processes (Backend + Frontend)...
+echo [1/2] Stopping all Node.js processes...
 taskkill /F /IM node.exe >nul 2>&1
 if %errorlevel% equ 0 (
-    echo       All Node.js processes stopped.
+    echo       Processes stopped.
 ) else (
-    echo       No running Node.js processes found.
+    echo       No running processes found.
 )
 
 echo.

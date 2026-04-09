@@ -70,7 +70,9 @@ export const PlaygroundPage: React.FC = () => {
         currentTermRef.addEventListener('contextmenu', handleContextMenu);
 
         // 3. Connect to Playground Backend
-        const socketUrl = 'ws://localhost:3001';
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const socketUrl = import.meta.env.DEV ? 'ws://localhost:8080' : `${protocol}//${window.location.host}`;
+
         const socket = new WebSocket(socketUrl);
         wsRef.current = socket;
 
