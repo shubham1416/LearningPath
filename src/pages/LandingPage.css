@@ -1,0 +1,682 @@
+/* =====================================================
+   LANDING PAGE — Premium immersive design
+   ===================================================== */
+
+.landing-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  color: var(--text-main);
+}
+
+/* ===== Ambient Background ===== */
+.lp-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lp-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 80%);
+}
+
+/* Glowing orbs */
+.lp-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+}
+
+.lp-orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59,130,246,0.35), transparent 70%);
+  top: -10%;
+  left: -10%;
+  animation: orbDrift 20s ease-in-out infinite alternate;
+}
+
+.lp-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(139,92,246,0.3), transparent 70%);
+  top: 30%;
+  right: -8%;
+  animation: orbDrift 25s ease-in-out infinite alternate-reverse;
+}
+
+.lp-orb-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(20,184,166,0.2), transparent 70%);
+  bottom: 5%;
+  left: 20%;
+  animation: orbDrift 22s ease-in-out infinite alternate;
+}
+
+@keyframes orbDrift {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(40px, -30px); }
+}
+
+/* Twinkling stars */
+.lp-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  animation: starTwinkle 4s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.8); }
+  50%      { opacity: 0.7; transform: scale(1.2); }
+}
+
+/* ===== Generic Section Styles ===== */
+.lp-section {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+.lp-section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.lp-section-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(59,130,246,0.7);
+  font-weight: 700;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.15);
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+
+.lp-section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+}
+
+.lp-section-header p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Gradient text helper */
+.lp-title-gradient {
+  background: linear-gradient(135deg, #60a5fa, #a78bfa, #e879f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Scroll-reveal ===== */
+.lp-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+
+.lp-reveal.lp-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Entrance animation helper ===== */
+.lp-anim-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: lpFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+.landing-page:not(.loaded) .lp-anim-up {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes lpFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================
+   HERO SECTION
+   ======================================================== */
+.lp-hero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  min-height: 100vh;
+  padding: 60px 50px 40px;
+  max-width: 1250px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.lp-hero-content {
+  flex: 1 1 420px;
+  max-width: 600px;
+}
+
+/* Badge */
+.lp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: #a78bfa;
+  background: rgba(139,92,246,0.08);
+  border: 1px solid rgba(139,92,246,0.18);
+  padding: 7px 18px;
+  border-radius: 30px;
+  margin-bottom: 24px;
+}
+
+/* Title */
+.lp-title {
+  font-size: 3.6rem;
+  font-weight: 900;
+  line-height: 1.08;
+  color: #fff;
+  margin-bottom: 22px;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Subtitle */
+.lp-subtitle {
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  max-width: 480px;
+}
+
+/* CTA Buttons */
+.lp-cta-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.lp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: #fff;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 4px 20px rgba(59,130,246,0.35),
+    0 0 0 0 rgba(59,130,246,0);
+  position: relative;
+  overflow: hidden;
+}
+
+.lp-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lp-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 30px rgba(59,130,246,0.45),
+    0 0 0 3px rgba(59,130,246,0.15);
+}
+
+.lp-btn-primary:hover::before {
+  opacity: 1;
+}
+
+.lp-btn-primary > * {
+  position: relative;
+  z-index: 1;
+}
+
+.lp-btn-lg {
+  padding: 16px 36px;
+  font-size: 1.05rem;
+}
+
+.lp-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  color: var(--text-main);
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.lp-btn-secondary:hover {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+/* Stats */
+.lp-stats-row {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.lp-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.lp-stat-value {
+  font-size: 1.6rem;
+  font-weight: 900;
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lp-stat-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ===== Hero Visual (DevOps infinity animation) ===== */
+.lp-hero-visual {
+  flex: 0 0 420px;
+  height: 380px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scroll hint */
+.lp-scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+}
+
+.lp-scroll-arrow {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%      { transform: translateY(6px); opacity: 0.8; }
+}
+
+/* ========================================================
+   FEATURES GRID
+   ======================================================== */
+.lp-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.lp-feature-card {
+  position: relative;
+  padding: 32px 28px;
+  border-radius: 18px;
+  background: rgba(16,20,34,0.6);
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.lp-feature-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(59,130,246,0.2);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 20px rgba(59,130,246,0.06);
+}
+
+/* Shimmer effect */
+.lp-feat-shine {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  transform: skewX(-15deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.lp-feature-card:hover .lp-feat-shine {
+  left: 140%;
+}
+
+.lp-feat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.lp-feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  font-family: var(--font-display);
+}
+
+.lp-feature-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ========================================================
+   ROADMAP PREVIEW
+   ======================================================== */
+.lp-roadmap-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.lp-road-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 14px;
+  background: rgba(16,20,34,0.55);
+  border: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.lp-road-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.03), transparent);
+  transition: left 0.5s ease;
+}
+
+.lp-road-card:hover::before {
+  left: 100%;
+}
+
+.lp-road-card:hover {
+  transform: translateY(-3px) translateX(4px);
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.lp-road-number {
+  font-size: 1.6rem;
+  font-weight: 900;
+  font-family: var(--font-display);
+  opacity: 0.35;
+  min-width: 36px;
+}
+
+.lp-road-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid;
+}
+
+.lp-road-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.lp-road-text h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-display);
+  margin-bottom: 2px;
+}
+
+.lp-road-text span {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+}
+
+.lp-road-arrow {
+  opacity: 0.2;
+  flex-shrink: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lp-road-card:hover .lp-road-arrow {
+  opacity: 0.6;
+  transform: translateX(4px);
+}
+
+/* ========================================================
+   CTA BANNER
+   ======================================================== */
+.lp-cta-banner {
+  position: relative;
+  text-align: center;
+  padding: 60px 40px;
+  border-radius: 24px;
+  background: rgba(16,20,34,0.6);
+  border: 1px solid rgba(59,130,246,0.12);
+  overflow: hidden;
+}
+
+.lp-cta-banner-glow {
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59,130,246,0.12), transparent 65%);
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.lp-cta-banner h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+  position: relative;
+}
+
+.lp-cta-banner p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.lp-cta-banner .lp-btn-primary {
+  position: relative;
+}
+
+/* ========================================================
+   FOOTER
+   ======================================================== */
+.lp-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 30px 20px 36px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.lp-footer-dot {
+  opacity: 0.3;
+}
+
+/* ========================================================
+   RESPONSIVE
+   ======================================================== */
+@media (max-width: 900px) {
+  .lp-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+    padding: 80px 30px 50px;
+  }
+
+  .lp-hero-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lp-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lp-cta-row {
+    justify-content: center;
+  }
+
+  .lp-stats-row {
+    justify-content: center;
+  }
+
+  .lp-title {
+    font-size: 2.6rem;
+  }
+
+  .lp-hero-visual {
+    flex: 0 0 auto;
+    width: 340px;
+    height: 280px;
+  }
+
+  .lp-section {
+    padding: 60px 24px;
+  }
+
+  .lp-section-header h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .lp-title {
+    font-size: 2rem;
+  }
+
+  .lp-hero {
+    padding: 60px 20px 40px;
+    min-height: auto;
+  }
+
+  .lp-features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-roadmap-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-cta-banner {
+    padding: 40px 24px;
+  }
+
+  .lp-btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lp-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

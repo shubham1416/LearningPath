@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
+import { LandingPage } from './pages/LandingPage';
 import { SpacePage } from './pages/SpacePage';
 import { StudyMaterialPage } from './pages/StudyMaterialPage';
 import { ProjectsPage } from './pages/ProjectsPage';
@@ -11,10 +12,11 @@ import { ProgressPage } from './pages/ProgressPage';
 const App: React.FC = () => {
   return (
     <Routes>
+      {/* Landing Page — no sidebar, full-screen immersive */}
+      <Route path="/" element={<LandingPage />} />
+
+      {/* Main App with sidebar layout */}
       <Route path="/" element={<AppLayout />}>
-        {/* Redirect root to general devops space */}
-        <Route index element={<Navigate to="/general" replace />} />
-        
         {/* General DevOps Routes */}
         <Route 
           path="general" 

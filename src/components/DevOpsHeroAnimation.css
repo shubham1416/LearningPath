@@ -1,0 +1,157 @@
+/* =====================================================
+   DEVOPS INFINITY HERO ANIMATION
+   ===================================================== */
+
+.devops-hero-anim {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Background glow ===== */
+.dha-backdrop-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.14) 0%,
+    rgba(59, 130, 246, 0.06) 40%,
+    transparent 70%
+  );
+  filter: blur(30px);
+  animation: dhaGlowPulse 5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes dhaGlowPulse {
+  0%   { opacity: 0.5; transform: scale(0.92); }
+  100% { opacity: 0.95; transform: scale(1.12); }
+}
+
+/* ===== Main SVG ===== */
+.dha-svg {
+  width: 340px;
+  height: 240px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Main infinity path — subtle breathing */
+.dha-main-path {
+  animation: dhaPathBreathe 3.5s ease-in-out infinite;
+}
+
+@keyframes dhaPathBreathe {
+  0%, 100% { opacity: 0.78; stroke-width: 13; }
+  50%      { opacity: 1;    stroke-width: 14; }
+}
+
+/* ===== Flowing data particles ===== */
+.dha-flow {
+  stroke-dasharray: 14 55;
+}
+
+.dha-flow-1 {
+  animation: dhaFlowForward 4s linear infinite;
+}
+
+.dha-flow-2 {
+  stroke-dasharray: 10 70;
+  animation: dhaFlowForward 6s linear infinite reverse;
+}
+
+@keyframes dhaFlowForward {
+  to { stroke-dashoffset: -650; }
+}
+
+/* ===== Text labels inside the loops ===== */
+.dha-label {
+  font-family: var(--font-display, 'Outfit', 'Inter', system-ui, sans-serif);
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  pointer-events: none;
+}
+
+.dha-dev {
+  fill: #60a5fa;
+}
+
+.dha-ops {
+  fill: #34d399;
+}
+
+/* ===== Floating tool icons around the loop ===== */
+.dha-float-icon {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: dhaIconFloat 5s ease-in-out infinite;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+@keyframes dhaIconFloat {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
+}
+
+.dha-icon-bubble {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.dha-icon-bubble:hover {
+  transform: scale(1.18);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.dha-icon-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.dha-float-icon:hover .dha-icon-label {
+  opacity: 0.8;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .dha-svg {
+    width: 260px;
+    height: 180px;
+  }
+
+  .dha-float-icon {
+    display: none; /* Hide floating icons on smaller screens */
+  }
+
+  .dha-backdrop-glow {
+    width: 200px;
+    height: 200px;
+  }
+}

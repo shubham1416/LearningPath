@@ -110,7 +110,7 @@ wss.on('connection', async (ws) => {
 });
 
 // AI Mentor Endpoint — with retry + fallback model
-const MODELS = ['gemini-2.0-flash', 'gemini-2.5-flash'];
+const MODELS = ['gemini-2.0-flash'];
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1500;
 
