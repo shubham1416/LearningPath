@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { BookOpen, LayoutDashboard, Terminal, Bot, BarChart3 } from 'lucide-react';
+import { BookOpen, LayoutDashboard, Terminal, Bot, BarChart3, Gamepad2 } from 'lucide-react';
 import './Sidebar.css';
 
 export const Sidebar: React.FC = () => {
@@ -58,6 +58,15 @@ export const Sidebar: React.FC = () => {
         >
           <Terminal size={18} />
           <span>Terminal Playground</span>
+        </NavLink>
+
+        <div className="nav-section-title" style={{ marginTop: '24px' }}>PLAY</div>
+        <NavLink 
+          to="/k8s-games" 
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <Gamepad2 size={18} />
+          <span>K8s Games</span>
         </NavLink>
       </div>
 

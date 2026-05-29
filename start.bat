@@ -3,31 +3,37 @@ echo ==========================================
 echo    DevOps Mastery Playground Starter
 echo ==========================================
 
-echo [1/4] Installing All Dependencies (Root Workspace)...
+echo [1/3] Installing All Dependencies (Root Workspace)...
 call npm install
 
-echo.
-echo [2/4] Building Frontend...
-call npm run build --workspace=client
-
-echo.
-echo [3/4] Building the Isolated Playground Image...
-docker build -t devops-playground infra/
-
 if %errorlevel% neq 0 (
-    echo [ERROR] Docker build failed. Is Docker Desktop running?
+    echo [ERROR] npm install failed.
     pause
     exit /b
 )
 
 echo.
-echo [4/4] Starting Playground Backend (Port 8080)...
-start "Playground Backend" cmd /c "node server/server.js"
+echo [2/3] Starting Backend Server (Port 8080)...
+start "Backend Server" cmd /k "cd /d "%~dp0" && node server/server.js"
+
+echo.
+echo [3/3] Starting Frontend Dev Server (Port 5173)...
+start "Frontend Dev" cmd /k "cd /d "%~dp0" && npm run dev --workspace=client"
 
 echo.
 echo ==========================================
-echo 🚀 Playground is LIVE at http://localhost:8080
+echo  All services starting...
+echo.
+echo  Frontend  :  http://localhost:5173
+echo  Backend   :  http://localhost:8080
 echo ==========================================
-
+echo.
+echo  Two new windows have been opened:
+echo   - "Backend Server"  (Express + API)
+echo   - "Frontend Dev"    (Vite dev server)
+echo.
+echo  Close those windows to stop the services,
+echo  or run stop.bat.
+echo ==========================================
 
 pause

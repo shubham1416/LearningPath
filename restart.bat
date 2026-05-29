@@ -10,18 +10,18 @@ echo       Stopped all Node.js processes.
 timeout /t 2 >nul
 
 echo.
-echo [2/3] Starting Backend (Port 3001)...
-start "Playground Backend" cmd /c "cd /d %~dp0backend && node server.js"
+echo [2/3] Starting Backend (Port 8080)...
+start "Playground Backend" cmd /c "cd /d %~dp0server && node server.js"
 timeout /t 2 >nul
 
 echo.
-echo [3/3] Starting Frontend (Port 5173)...
+echo [3/3] Starting Frontend (Dev Server)...
 echo ==========================================
 echo    Services restarted!
-echo    Backend:  http://localhost:3001
-echo    Frontend: http://localhost:5173
+echo    Backend:  http://localhost:8080
+echo    Frontend dev: will open automatically
 echo ==========================================
 cd /d %~dp0
-npm run dev
+call npm run dev
 
 pause

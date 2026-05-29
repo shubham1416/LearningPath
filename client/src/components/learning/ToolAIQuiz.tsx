@@ -46,8 +46,15 @@ export const ToolAIQuiz: React.FC<ToolAIQuizProps> = ({ toolName }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'AI request failed');
+      let data;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        const textData = await response.text();
+        throw new Error(`Unexpected response from server: ${textData || response.statusText}`);
+      }
+      if (!response.ok) throw new Error(data?.error || 'AI request failed');
       setChatHistory([...newHistory, { role: 'ai', content: data.text }]);
     } catch (error: any) {
       setChatHistory([...newHistory, { role: 'ai', content: `**Error:** ${error.message}` }]);

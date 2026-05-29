@@ -352,7 +352,10 @@ export const toolsData: ToolData[] = [
       beginner: {
         title: 'Pods & Deployments',
         description: 'Basic resource architecture in K8s.',
-        studyMaterials: [{ name: 'Kubernetes Crash Course', link: 'https://www.youtube.com/watch?v=X48VuDVv0do', isVideo: true }]
+        studyMaterials: [
+          { name: 'Kubernetes Crash Course', link: 'https://www.youtube.com/watch?v=X48VuDVv0do', isVideo: true },
+          { name: '🎮 K8s Games — Learn by Playing', link: '/k8s-games', isInternal: true, internalRouteKey: 'k8s-games' }
+        ]
       },
       intermediate: {
         title: 'State & Networking',

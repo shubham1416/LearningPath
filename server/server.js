@@ -184,8 +184,9 @@ app.post('/api/chat', async (req, res) => {
       : `AI Error: ${error.message || 'Unknown error'}`;
     res.status(isOverloaded ? 503 : 500).json({ error: errMsg });
   }
+});
 // Catch-all route for SPA
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
 

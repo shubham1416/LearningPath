@@ -8,6 +8,7 @@ import { ProjectsPage } from './pages/ProjectsPage';
 import { PlaygroundPage } from './pages/PlaygroundPage';
 import { AIMentorPage } from './pages/AIMentorPage';
 import { ProgressPage } from './pages/ProgressPage';
+import { K8sGamesPage } from './pages/K8sGamesPage';
 
 const App: React.FC = () => {
   return (
@@ -53,6 +54,12 @@ const App: React.FC = () => {
         <Route 
           path="ai-mentor" 
           element={<AIMentorPage />} 
+        />
+        
+        {/* K8s Games */}
+        <Route 
+          path="k8s-games" 
+          element={<K8sGamesPage />} 
         />
       </Route>
       

@@ -94,10 +94,17 @@ export const AIMentorPage: React.FC = () => {
         body: JSON.stringify(payload)
       });
 
-      const data = await response.json();
+      let data;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        const textData = await response.text();
+        throw new Error(`Unexpected response from server: ${textData || response.statusText}`);
+      }
       
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to communicate with AI');
+        throw new Error(data?.error || 'Failed to communicate with AI');
       }
 
       setChatHistory([...newHistory, { role: 'ai', content: data.text }]);
